@@ -11,6 +11,7 @@ patient *createNode(char *name, char *month, int day, int year, int age) {
   temp->age = age;
   return temp;
 };
+
 void pushMid(char *name, char *month, int day, int year, int age)
 {
     patient *newNode = createNode(name, month, day , year, age);
@@ -18,29 +19,28 @@ void pushMid(char *name, char *month, int day, int year, int age)
     {
         head = tail = newNode;
     }
-    else if(age < head->age)
+    else if(age > head->age)
     {
         newNode->next = head;
         head->prev = newNode;
         head = newNode;
     }    
-    else if(age > tail->age)
+    else if(age < tail->age)
     {
         tail->next = newNode;
         newNode->prev = tail;
         tail = newNode;
     }
-    else
-    {
+    else{
         patient *curr = head;
-        while(curr && curr->next->age < age)
+        while(curr && curr->next->age > age)
         {
             curr = curr->next;
         }
         newNode->next = curr->next;
         newNode->prev = curr;
         curr->next->prev = newNode;
-        curr->next = newNode;   
+        curr->next = newNode;
     }
 }
 void showCured(int left, int temp)
@@ -49,10 +49,7 @@ void showCured(int left, int temp)
     printf("Need %d more cure\n", left);
     for(int i = 0; curr; curr=curr->prev,i++)
     {
-        if(i >= temp)
-        {
-            printf("%d %s %d - %s\n", curr->day, curr->month, curr->year, curr->name);
-        }
+        printf("%d %s %d - %s\n", curr->day, curr->month, curr->year, curr->name);
     }
 }
 bool isNum(char c)
@@ -62,6 +59,17 @@ bool isNum(char c)
         return true;
     }
     else false;
+}
+void popHead() {
+  if(head && head == tail) { 
+    head = tail = NULL;
+    free(head);
+  } else { 
+    patient *newHead = head->next; 
+    head->next = newHead->prev = NULL; 
+    free(head); 
+    head = newHead; 
+  }
 }
 int convertstr(char* str)
 {
