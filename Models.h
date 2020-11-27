@@ -5,3 +5,4 @@ struct patient {
   patient *next, *prev;
 } *head, *tail, *curr;
 
+
