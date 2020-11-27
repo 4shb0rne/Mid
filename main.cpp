@@ -20,6 +20,10 @@ int main()
         strcpy(patientdata[i], input);
         pushMid(input, cmonth, day, year, age[i]);
     }
+    for(int i = 0; i < total_cure; i++)
+    {
+        popHead();
+    }
     showCured(total_patient-total_cure, total_patient);
     return 0;   
 }
